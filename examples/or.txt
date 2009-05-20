@@ -1,0 +1,35 @@
+[NOM]
+S s1 s2 s3
+D1 D2
+k1 k2 k3 k4
+P
+[END]
+[RELATION]
+S s1 40
+s s2 60
+s s3 65
+s1 k1 15
+s1 d1 25
+s2 d1 30
+s2 k2 20
+s2 k3 10
+s2 d2 20
+s3 d2 40
+s3 k4 20
+d1 k2 10
+d1 k1 10
+d2 d1 10
+d2 k3 20
+d2 k4 30
+k1 p 25
+k2 p 50
+k3 p 30
+k4 p 40
+[END]
+[CONSO]
+S S2 10
+S2 D2 10
+D2 D1 10
+D1 K2 10
+K2 P 10
+[END]
