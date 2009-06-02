@@ -7,6 +7,7 @@
 #define F_ESPACE	2
 #define F_RETOUR	4
 #define F_TRUC_LIGNE 	8
+#define F_COMMENT	16
 
 // pour OPTIONS ---------
 #define O_NOM		1

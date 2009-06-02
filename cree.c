@@ -8,7 +8,7 @@
 
 #include "convertie.h"
 #include "argument.h"
-#include "../Fonctions/fonctions.h"
+#include "functions.h"
 
 int fcloseall( void ) ;
 

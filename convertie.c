@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 ///                                                                            ///
-///    ELIMINE LES ESPCAES DOUBLE, LES LIGNES ENT TROP...                      /// 
+///    ELIMINE LES ESPACES DOUBLE, LES LIGNES ENT TROP...                      /// 
 ///    VERIFIE SI LES OPTION SONT ENTREES CORRECTEMENTS                        /// 
 ///                                                                            ///
 //////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +77,11 @@ int VerifSource ( FILE * Source , FILE * Cible )
 		VerifOption () ;		
 		switch ( c )
 		{
-			case '\n': FLAGS |= F_RETOUR ; break ;
+			case '#':	FLAGS |= F_COMMENT ; break;		// Begin of comment
+			case '\n': 
+				FLAGS |= F_RETOUR ;										// \n find
+				A_NON_B( FLAGS, F_COMMENT );						// end of comment if it was case
+				break ;
 			case ' ' : FLAGS |= F_ESPACE ; break ;
 			default :
 				if ( FLAGS & F_TRUC_LIGNE )
@@ -90,7 +94,8 @@ int VerifSource ( FILE * Source , FILE * Cible )
 				FLAGS |= F_TRUC_LIGNE ;		
 				A_NON_B ( FLAGS , F_RETOUR ) ;
 				A_NON_B ( FLAGS , F_ESPACE ) ;
-				fprintf ( Cible , "%c", c ) ;
+				if ( ! (FLAGS & F_COMMENT) )
+					fprintf ( Cible , "%c", c ) ;
 			break ;				
 		}
 	}
