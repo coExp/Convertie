@@ -47,7 +47,7 @@ int Charge_Nom_Normal ( FILE * Source )
 		if ( feof( Source ) )
 			return -1 ;
 
-	} while ( strncasecmp ( mot1, "[NOM]", 5 ) != 0 ) ;
+	} while ( strncasecmp ( mot1, "[NAME]", 5 ) != 0 ) ;
 
 	for (;;)
 	{
@@ -156,7 +156,7 @@ int LitSource ( FILE * Source )
 	Charge_Relation ( Source, &Matrice_Max, "[RELATION]" ) ;
 
 	if ( OPTIONS & O_CONSO )
-		Charge_Relation ( Source, &Matrice_Conso, "[CONSO]" ) ;
+		Charge_Relation ( Source, &Matrice_Conso, "[CONS]" ) ;
 	
 	return 0 ;
 }
@@ -230,14 +230,14 @@ int Main_Fichier_Out ( void )
 	{
 		if ( NULL == ( ptr_source = fopen ( ARG.Files_Names [ i ] ,  "r" ) ) )
 			return 2 ;
-		if ( NULL == ( ptr_cible = fopen ( ARG.Files_Names [ i + 1 ], "w+" ) ) )
-			return 3 ;
 		if ( NULL == ( ptr_tmp = tmpfile () ) )
 			return 4 ;
 		if ( -1 == VerifSource ( ptr_source, ptr_tmp ) )
 			return 5 ;
 		if ( -1 == LitSource ( ptr_tmp ) )
 			return 6 ;
+		if ( NULL == ( ptr_cible = fopen ( ARG.Files_Names [ i + 1 ], "w+" ) ) )
+			return 3 ;
 		if ( -1 == EcritMatrice ( ptr_cible, Nbr_Sommet, Nom_Sommet, Matrice_Max, Matrice_Conso ) )
 			return 7 ;
 
@@ -265,14 +265,14 @@ int Main_Pas_Fichier_Out ( void )
 
 		if ( NULL == ( ptr_source = fopen ( ARG.Files_Names[ i ] ,  "r" ) ) )
 			return 2 ; 
-		if ( NULL == ( ptr_cible = fopen ( Nom_Cible , "w+" ) ) )		
-			return 3 ; 		
 		if ( NULL == ( ptr_tmp = tmpfile () ) )
 			return 4 ; 
 		if ( -1 == VerifSource ( ptr_source, ptr_tmp ) )
 			return 5 ;
 		if ( -1 == LitSource ( ptr_tmp ) )
 			return 6 ; 
+		if ( NULL == ( ptr_cible = fopen ( Nom_Cible , "w+" ) ) )		
+			return 3 ; 		
 		if ( -1 == EcritMatrice ( ptr_cible , Nbr_Sommet, Nom_Sommet, Matrice_Max, Matrice_Conso ) )
 			return 7 ; 
 

@@ -28,7 +28,7 @@ void AddChar ( char c )
 //
 void VerifOption ( void )
 {
-	if      ( strncasecmp ( TAMP, "]MON[", 5 ) == 0 )
+	if      ( strncasecmp ( TAMP, "]EMAN[", 6 ) == 0 )
 	{
 		if ( OPTIONS & O_PAR_OUVERT )
 			OPTIONS |= O_ERREUR ;
@@ -43,7 +43,7 @@ void VerifOption ( void )
 
 		OPTIONS |= O_RELATION | O_PAR_OUVERT ;
 	}
-	else if ( strncasecmp ( TAMP, "]OSNOC[", 7 ) == 0 )
+	else if ( strncasecmp ( TAMP, "]SNOC[", 6 ) == 0 )
 	{
 		if ( OPTIONS & O_PAR_OUVERT )
 			OPTIONS |= O_ERREUR ;

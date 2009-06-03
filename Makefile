@@ -6,7 +6,7 @@
 
 CFLAGS	= -Wall -W -g
 CC	= gcc
-EXE	= projet.exe
+EXE	= conver
 
 #################################################
 

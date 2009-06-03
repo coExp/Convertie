@@ -1,9 +1,16 @@
-[NOM]
+#############################
+### Liste of name vertices
+###
+[NAME]
 S s1 s2 s3
 D1 D2
 k1 k2 k3 k4
 P
 [END]
+
+############################################################
+### Maximum consumption and relationship between vertices
+###
 [RELATION]
 S s1 40
 s s2 60
@@ -26,7 +33,11 @@ k2 p 50
 k3 p 30
 k4 p 40
 [END]
-[CONSO]
+
+###########################
+### Existing consumption 
+###
+[CONS]
 S S2 10
 S2 D2 10
 D2 D1 10

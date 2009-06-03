@@ -83,18 +83,15 @@ int AfficheAide ( int Code, char * Message, char * Nom )
 	if ( strcasecmp ( Message, "" ) != 0 )
 		fprintf ( stderr, "\033[0;31m%s\n\033[0;m", Message ) ;
 
-	printf ( "Usage : %s [OPTION] FICHIER [FICHIER]...\nConvertie FICHIER source dans le bon format\n", Nom ) ;
+	printf ( "Usage : %s [OPTION] FILE [FILE]...\nConvertie FILE source dans le bon format\n", Nom ) ;
 	printf ( "Fichier source decrit un graphe de flux, ses sommets, ses capacités entre sommets, voir ses consommations courrantes\nLe fichier cible sera une matrice exploitable par des algo de maximisation de flux.\n" ) ;
 	printf ("\nOPTION :\n") ;
 	printf ("  -R   cree le nom fichier cible (foo.txt -> foo.mat)\n") ;
 	printf ("  -C   <file.in> <file.out> [...] ; ne cree pas les noms des fichiers cibles\n" ) ;
 	printf ("  -N   enleve les \\n et espaces doublés, ne cree pas de matrice de conso, ecrase fichier source \n") ;
-//	printf ("      n      enleve les retour de ligne doublees\n") ;
-//	printf ("      s      enleve les espaces en doubles\n") ;
-//	printf ("      sn     enlece les espaces et lignes doubles\n") ;
-	printf ( "\nSyntaxe du fichier source :" ) ;
-	printf ( "\t[NOM] nom1 nom2 ... [END]\n" ) ;
+	printf ( "\nSyntaxe du fichier source :\n" ) ;
+	printf ( "\t[NAME] nom1 nom2 ... [END]\n" ) ;
 	printf ( "\t[RELATION]\n\tnom1 nom2 15\n\tnom5 nom4 20\n\t[END]\n" ) ;
-	printf ( "\t[CONSO]\n\tnom1 nom2 5\n\tnom6 nom4 2\n\t[END]\n" ) ;
+	printf ( "\t[CONS]\n\tnom1 nom2 5\n\tnom6 nom4 2\n\t[END]\n" ) ;
 	return Code ;
 }
