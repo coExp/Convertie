@@ -1,7 +1,7 @@
 require 'rubygems'  # allows for the loading of gems
 require 'graphviz'  # this loads the ruby-graphviz gem
 
-
+# Verify the file if all cases are close ----------------
 def verif f
 	@@con = false
 	@rel = false
@@ -49,6 +49,7 @@ def verif f
 	return @rel
 end
 
+# Rename the extention of the file ----------------------
 def rename name
 	n = name.split '.'
 	return n[0].concat('.png') if n.size == 1
@@ -60,40 +61,57 @@ def rename name
 	return name
 end
 
-def graph f
+# Read the file and add edges to the graph -----------------
+def add_edge f
+	@rel_f = false
 	begin
 		file = File.open(f,'r')
 	rescue
-		puts 'Error on file: '+f
-		return 
+		puts 'Error on file: ' + f
+		return false
 	end
-	# initialize new Graphviz graph
-	g = GraphViz::new( "structs", "type" => "graph" )
-	g[:rankdir] = "LR"
-	g.edge[:arrowsize]= "0.5"
-	g.edge[:arrowhead]= "open"
 
-	@rel_f = false
-	file.each_line do |line|
-		@rel_f = false if line.match 'END' and line[0] == 91
-		if @rel_f and line[0] != 35 			
-			l = line.split ' '
-			if @@consos.key? "#{l[0].upcase} -> #{l[1].upcase}"
-				label = @@consos.fetch("#{l[0].upcase} -> #{l[1].upcase}").to_s + "/" + l[2]
-			else
-				label = "0/" + l[2]
+	case @@con
+	when true
+		file.each { |line|
+			@rel_f = false if line.match 'END' and line[0] == 91
+			if @rel_f
+				l = line.split ' '
+				if @@consos.key? "#{l[0].upcase} -> #{l[1].upcase}"
+					label = @@consos.fetch("#{l[0].upcase} -> #{l[1].upcase}").to_s + "/" + l[2]
+				else
+					label = "0/" + l[2]
+				end
+				@g.add_edge(l[0].upcase, l[1].upcase ).label= label
 			end
-			puts "1:#{} 2:#{} lab:#{label}!"
-			g.add_edge(l[0].upcase, l[1].upcase ).label= label
-		end
-		@rel_f = true if line.match 'RELATION' and line[0] == 91
+			@rel_f = true if line.match 'RELATION' and line[0] == 91 
+		}
+
+	when false		
+		file.each { |line|
+			@rel_f = false if line.match 'END' and line[0] == 91
+			if @rel_f
+				l = line.split ' '
+				@g.add_edge(l[0].upcase, l[1].upcase ).label= l[2]
+			end
+			@rel_f = true if line.match 'RELATION' and line[0] == 91 		
+		}
 	end
-	f = rename f 
-	puts "file: #{f}"
-	g.output( "output" => "png", :file => rename(f) )
-	file.close
+	return true
 end
 
+# Make the graph ------------------------------
+def graph f
+	# initialize new Graphviz graph
+	@g = GraphViz::new( "structs", "type" => "graph" )
+	@g[:rankdir] = "LR"
+	@g.edge[:arrowsize]= "0.5"
+	@g.edge[:arrowhead]= "open"
+
+	@g.output( "output" => "png", :file => rename(f) ) if add_edge f 
+end
+
+# Load the consumtion if there are -------------
 def load_con f
 	file = File.open(f,'r')
 	@@consos = {}
@@ -110,6 +128,7 @@ def load_con f
 	puts "2: #{@@consos} "
 end
 
+# Do it for all the file in argument --------------
 ARGV.each do |file|
 	if verif(file)
 		load_con(file) if @@con
